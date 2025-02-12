@@ -1,1 +1,0 @@
-from .retriever import SceneProgAssetRetriever as AssetRetriever
