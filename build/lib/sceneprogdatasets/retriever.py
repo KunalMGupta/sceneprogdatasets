@@ -3,14 +3,17 @@ from .future.future import AssetRetrieverFuture
 
 class SceneProgAssetRetriever:
     def __init__(self):
-        breakpoint()
+       
         import os
         from pathlib import Path
         path = Path(__file__).parent
         if not os.path.exists(os.path.join(path,'HSSD/assets/model2description.json')):
-            download_path = os.path.join(path,'download.sh')
-            os.system(f'bash {download_path}')
-
+            os.makedirs(os.path.join(path,'HSSD/assets'))
+            os.makedirs(os.path.join(path,'future/assets'))
+            os.system(f"aws s3 cp s3://sceneprog-nautilus/sceneprogdatasets/future/ {os.path.join(path,'future/assets')} --recursive")
+            os.system(f"aws s3 cp s3://sceneprog-nautilus/sceneprogdatasets/hssd/ {os.path.join(path,'HSSD/assets')} --recursive")
+            # os.system(f'bash {path}/download.sh')
+        
         self.hssd = AssetRetrieverHSSD()
         self.future = AssetRetrieverFuture()
     

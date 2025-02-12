@@ -7,9 +7,12 @@ from langchain_openai import OpenAIEmbeddings
 
 # FUTURE_PATH = '/Users/kunalgupta/Documents/sceneprog-datasets/3D-FUTURE-models'
 FUTURE_PATH = os.getenv('FUTURE_PATH')
-BASE=os.getcwd()+'/sceneprogdatasets/future/'
-embd_location = BASE+'assets/embeddings_future.npz'
-model2description_location = BASE+'assets/model2description.json'
+
+from pathlib import Path
+BASE = str(Path(__file__).parent)
+# BASE=os.getcwd()+'/sceneprogdatasets/future/'
+embd_location = os.path.join(BASE,'assets/embeddings_future.npz')
+model2description_location = os.path.join(BASE,'assets/model2description.json')
 
 def load_model(assetID):
     path = os.path.join(FUTURE_PATH, assetID+'.glb')

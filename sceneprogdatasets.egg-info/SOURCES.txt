@@ -1,6 +1,8 @@
+MANIFEST.in
 README.md
 setup.py
 sceneprogdatasets/__init__.py
+sceneprogdatasets/download.sh
 sceneprogdatasets/retriever.py
 sceneprogdatasets.egg-info/PKG-INFO
 sceneprogdatasets.egg-info/SOURCES.txt

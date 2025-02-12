@@ -8,9 +8,10 @@ from langchain_openai import OpenAIEmbeddings
 HSSD_PATH = os.getenv('HSSD_PATH')
 # HSSD_PATH = '/Users/kunalgupta/Documents/sceneprog-datasets/HSSD-models'
 
-BASE=os.getcwd()+'/sceneprogdatasets/hssd/'
-embd_location = BASE+'assets/embeddings_hssd.npz'
-model2description_location = BASE+'assets/model2description.json'
+from pathlib import Path
+BASE = str(Path(__file__).parent)
+embd_location = os.path.join(BASE,'assets/embeddings_hssd.npz')
+model2description_location = os.path.join(BASE,'assets/model2description.json')
 
 def load_model(assetID):
     path = os.path.join(HSSD_PATH, assetID+'.glb')
