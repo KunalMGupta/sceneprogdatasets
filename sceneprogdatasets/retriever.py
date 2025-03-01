@@ -7,13 +7,35 @@ class SceneProgAssetRetriever:
         import os
         from pathlib import Path
         path = Path(__file__).parent
-        if not os.path.exists(os.path.join(path,'HSSD/assets/model2description.json')):
-            os.makedirs(os.path.join(path,'HSSD/assets'))
-            os.makedirs(os.path.join(path,'future/assets'))
-            os.system(f"aws s3 cp s3://sceneprog-nautilus/sceneprogdatasets/future/ {os.path.join(path,'future/assets')} --recursive")
-            os.system(f"aws s3 cp s3://sceneprog-nautilus/sceneprogdatasets/hssd/ {os.path.join(path,'HSSD/assets')} --recursive")
-            # os.system(f'bash {path}/download.sh')
         
+        if os.getenv('FUTURE_PATH') is None or os.getenv('HSSD_PATH') is None:
+            msg = f"""
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+You need to set the FUTURE_PATH and HSSD_PATH environment variables first!
+
+Run the following commands to set the environment variables:
+export FUTURE_PATH=<path_to_future_assets>
+export HSSD_PATH=<path_to_hssd_assets>
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+"""
+            raise Exception(msg)
+        
+            
+        if not os.path.exists(os.path.join(path,'HSSD/assets/model2description.json')) or not os.path.exists(os.path.join(path,'future/assets/model2description.json')):
+            msg = f"""
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+You need to download the assets first!
+
+Run the following commands to download the assets:
+
+aws s3 cp s3://sceneprog-nautilus/sceneprogdatasets/future/ {os.path.join(path,'future/assets')} --recursive
+aws s3 cp s3://sceneprog-nautilus/sceneprogdatasets/hssd/ {os.path.join(path,'HSSD/assets')} --recursive
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+"""
+            raise Exception(msg)
+       
         self.hssd = AssetRetrieverHSSD()
         self.future = AssetRetrieverFuture()
     
