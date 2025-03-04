@@ -39,14 +39,14 @@ aws s3 cp s3://sceneprog-nautilus/sceneprogdatasets/hssd/ {os.path.join(path,'HS
         self.hssd = AssetRetrieverHSSD()
         self.future = AssetRetrieverFuture()
     
-    def __call__(self, description):
+    def __call__(self, description, random=True):
         ## first search in Future
-        future_results = self.future.run(description)
+        future_results = self.future.run(description, random=random)
         if not future_results == 'No models found':
             return ("FUTURE",future_results)
         
         ## then search in HSSD
-        hssd_results = self.hssd.run(description)
+        hssd_results = self.hssd.run(description, random=random)
         if not hssd_results == 'No models found':
             return ("HSSD",hssd_results)
         

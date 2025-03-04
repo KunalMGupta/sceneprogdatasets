@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 setup(
     name='sceneprogdatasets',  # Replace with your package's name
-    version='0.1.2',    # Replace with your package's version
+    version='0.1.3',    # Replace with your package's version
     description='A dataset retriever for SceneProg project',
     long_description=open('README.md').read(),  # Optional: Use your README for a detailed description
     long_description_content_type='text/markdown',

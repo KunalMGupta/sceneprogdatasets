@@ -88,7 +88,7 @@ class AssetRetrieverFuture:
         ratio_sim = np.linalg.norm(self.all_ratios - target_ratio, axis=1)
         return ratio_sim
     
-    def run(self, query):
+    def run(self, query, random=True):
         emb = np.array(self.embeddings.embed_query(query))
         similarity = np.dot(self.all_embeddings, emb)
         ratio_sim = self.compute_ratio_sim(query)
@@ -105,7 +105,10 @@ class AssetRetrieverFuture:
         
         scores = 5*(scores-0.4)
         scores = np.exp(scores)/np.sum(np.exp(scores))
-        model = np.random.choice(models, p=scores)
+        if random:
+            model = np.random.choice(models, p=scores)
+        else:
+            model = models[np.argmax(scores)]
 
         path = os.path.join(FUTURE_PATH, model+'.glb')
 
